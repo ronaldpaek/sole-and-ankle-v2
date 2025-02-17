@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import { COLORS } from '../../constants';
 
+import Icon from '../Icon';
 import SearchInput from '../SearchInput';
 import UnstyledButton from '../UnstyledButton';
-import Icon from '../Icon';
 
 const SuperHeader = () => {
   return (
@@ -28,7 +28,9 @@ const Wrapper = styled.div`
   background-color: ${COLORS.gray[900]};
   display: flex;
   align-items: center;
-  padding: 8px 32px;
+  padding-inline: 32px;
+  min-height: 40px;
+  gap: 24px;
 `;
 
 const MarketingMessage = styled.span`
@@ -40,7 +42,6 @@ const HelpLink = styled.a`
   color: inherit;
   text-decoration: none;
   outline-offset: 2px;
-  margin-inline: 24px;
 
   &:not(:focus-visible) {
     outline: none;
