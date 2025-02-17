@@ -31,41 +31,33 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
-  let flag;
-  let backgroundColor;
-  if (variant === 'on-sale') {
-    flag = 'Sale';
-    backgroundColor = 'hsla(340, 65%, 47%, 1)';
-  } else if (variant === 'new-release') {
-    flag = 'Just released!';
-    backgroundColor = 'hsla(240, 60%, 63%, 1)';
-  } else if (variant === 'default') {
-    flag = '';
-    backgroundColor = '';
-  }
-
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {variant === 'on-sale' && <SaleFlag>Sale</SaleFlag>}
+          {variant === 'new-release' && <NewFlag>Just released!</NewFlag>}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price variant={variant}>{formatPrice(price)}</Price>
+          <Price
+            style={{
+              '--color': variant === 'on-sale' ? COLORS.gray[700] : undefined,
+              '--text-decoration':
+                variant === 'on-sale' ? 'line-through' : undefined,
+            }}
+          >
+            {formatPrice(price)}
+          </Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
-          <SalePrice>{salePrice && formatPrice(salePrice)}</SalePrice>
+          <SalePrice>
+            {variant === 'on-sale' && formatPrice(salePrice)}
+          </SalePrice>
         </Row>
-        <Flag
-          style={{
-            '--background-color': backgroundColor,
-          }}
-        >
-          {flag}
-        </Flag>
       </Wrapper>
     </Link>
   );
@@ -87,6 +79,7 @@ const ImageWrapper = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  border-radius: 16px 16px 4px 4px;
 `;
 
 const Row = styled.div`
@@ -101,9 +94,8 @@ const Name = styled.h3`
 `;
 
 const Price = styled.span`
-  text-decoration: ${(p) => {
-    return p.variant === 'on-sale' ? 'line-through' : 'none';
-  }};
+  color: var(--color);
+  text-decoration: var(--text-decoration);
 `;
 
 const ColorInfo = styled.p`
@@ -117,18 +109,25 @@ const SalePrice = styled.span`
 
 const Flag = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 12px;
+  right: -4px;
+  background-color: red;
   height: 32px;
-  color: hsla(0, 0%, 100%, 1);
-  font-size: 14px;
-  font-weight: 700;
-  background-color: var(--background-color);
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: ${14 / 16}rem;
+  font-weight: ${WEIGHTS.bold};
+  color: ${COLORS.white};
   border-radius: 2px;
-  margin-right: -4px;
-  padding: 9px;
-  display: flex;
-  align-items: center;
 `;
+
+const SaleFlag = styled(Flag)`
+  background-color: ${COLORS.primary};
+`;
+
+const NewFlag = styled(Flag)`
+  background-color: ${COLORS.secondary};
+`;
+
 
 export default ShoeCard;
