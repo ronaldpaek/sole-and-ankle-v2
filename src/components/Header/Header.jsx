@@ -12,9 +12,16 @@ const Header = () => {
     <header>
       <SuperHeader />
       <MainHeader>
-        <LogoWrapper>
-          <Logo />
-        </LogoWrapper>
+        <Logo
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: '32px',
+            height: '50%',
+            margin: 'auto',
+          }}
+        />
         <Nav>
           <NavLink href="/sale">Sale</NavLink>
           <NavLink href="/new">New&nbsp;Releases</NavLink>
@@ -35,15 +42,6 @@ const MainHeader = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-`;
-
-const LogoWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 32px;
-  height: 50%;
-  margin: auto;
 `;
 
 const Nav = styled.nav`
